@@ -3,7 +3,7 @@
  *  All rights reserved.
  *
  *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
+ *  LICENSE file in the root directory of this source tree. An additional grant
  *  of patent rights can be found in the PATENTS file in the same directory.
  *
  */
@@ -27,7 +27,7 @@ static CKComponentAnimationHooks hooksForCAAnimation(CKComponent *component, CAA
   // immediately to protect against the *caller* mutating the animation after this point but before it's used.)
   CAAnimation *copiedAnimation = [originalAnimation copy];
   return {
-    .didRemount = ^(id context){
+    .didRemount = [^(id context){
       CALayer *layer = component.viewForAnimation.layer;
       CKCAssertNotNil(layer, @"%@ has no mounted view, so it cannot be animated", [component class]);
       NSString *key = [[NSUUID UUID] UUIDString];
@@ -40,7 +40,7 @@ static CKComponentAnimationHooks hooksForCAAnimation(CKComponent *component, CAA
       }
       [layer addAnimation:copiedAnimation forKey:key];
       return [[CKAppliedAnimationContext alloc] initWithTargetLayer:layer key:key];
-    },
+  } copy],
     .cleanup = ^(CKAppliedAnimationContext *context){
       [context.targetLayer removeAnimationForKey:context.key];
     }
