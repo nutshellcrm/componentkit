@@ -26,7 +26,7 @@
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 
 typedef struct _CKStateScopeKey {
-  Class __unsafe_unretained componentClass;
+  id componentClass;
   id identifier;
 
   bool operator==(const _CKStateScopeKey &v) const {
