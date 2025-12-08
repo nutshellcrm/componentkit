@@ -8,6 +8,7 @@
  *
  */
 
+#import <functional>
 #import <utility>
 #import <vector>
 
@@ -30,13 +31,11 @@ struct CKComponentLayout {
   CGSize size;
   std::shared_ptr<const std::vector<CKComponentLayoutChild>> children;
 
-  CKComponentLayout(CKComponent *c, CGSize s, std::vector<CKComponentLayoutChild> ch = {})
-  : component(c), size(s), children(new std::vector<CKComponentLayoutChild>(std::move(ch)), CKOffMainThreadDeleter()) {
-    CKCAssertNotNil(c, @"Nil components are not allowed");
-  };
+  CKComponentLayout(CKComponent *c, CGSize s);
 
-  CKComponentLayout()
-  : component(nil), size({0, 0}), children(new std::vector<CKComponentLayoutChild>(), CKOffMainThreadDeleter()) {};
+  CKComponentLayout(CKComponent *c, CGSize s, std::vector<CKComponentLayoutChild> ch);
+
+  CKComponentLayout();
 };
 
 struct CKComponentLayoutChild {

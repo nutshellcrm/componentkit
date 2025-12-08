@@ -72,7 +72,7 @@ CKThreadLocalComponentScope::CKThreadLocalComponentScope(id<CKComponentStateList
   cursor()->pushFrameAndEquivalentPreviousFrame([CKComponentScopeFrame rootFrameWithListener:listener globalIdentifier:globalIdentifier], previousRootFrame);
 }
 
-CKThreadLocalComponentScope::~CKThreadLocalComponentScope() throw(...)
+CKThreadLocalComponentScope::~CKThreadLocalComponentScope() noexcept(false)
 {
   cursor()->popFrame();
   CKCAssert(cursor()->empty(), @"");

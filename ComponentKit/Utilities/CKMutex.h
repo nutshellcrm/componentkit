@@ -115,6 +115,8 @@ namespace CK {
   {
     pthread_mutex_t _m; // public so it can be provided by CK_MUTEX_INITIALIZER and friends
 
+    constexpr StaticMutex(pthread_mutex_t m) : _m(m) {}
+
     void lock () {
       CK_THREAD_ASSERT_ON_ERROR(pthread_mutex_lock (this->mutex()));
     }
