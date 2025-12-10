@@ -31,6 +31,20 @@ void CKOffMainThreadDeleter::operator()(std::vector<CKComponentLayoutChild> *tar
   }
 }
 
+CKComponentLayout::CKComponentLayout(CKComponent *c, CGSize s)
+: component(c), size(s), children(new std::vector<CKComponentLayoutChild>(), CKOffMainThreadDeleter()) {
+  CKCAssertNotNil(c, @"Nil components are not allowed");
+}
+
+CKComponentLayout::CKComponentLayout(CKComponent *c, CGSize s, std::vector<CKComponentLayoutChild> ch)
+: component(c), size(s), children(new std::vector<CKComponentLayoutChild>(std::move(ch)), CKOffMainThreadDeleter()) {
+  CKCAssertNotNil(c, @"Nil components are not allowed");
+}
+
+CKComponentLayout::CKComponentLayout()
+: component(nil), size({0, 0}), children(new std::vector<CKComponentLayoutChild>(), CKOffMainThreadDeleter()) {}
+
+
 NSSet *CKMountComponentLayout(const CKComponentLayout &layout, UIView *view, CKComponent *supercomponent)
 {
   struct MountItem {
